@@ -35,9 +35,7 @@ while(1):
     ]
     res = eval(gpt4.invoke(manager_msg).content)
     next_role = res['role']
-    next_msg = res['msg']
     print('--------------------------------------------------------------------------------')
-    print(f'Manager 對 {next_role} 發問:\n{next_msg}')
 
     # 被選定的角色發言
     if next_role == 'Customer':
@@ -48,7 +46,7 @@ while(1):
     else:
         role_msg = [
             SystemMessage(content=role_prompt[next_role]), # 帶入該角色的 prompt
-            HumanMessage(content=next_msg),
+            HumanMessage(content=f"{msg_his}"),
         ]
         res = gpt4.invoke(role_msg).content
 
@@ -58,10 +56,16 @@ while(1):
         if match:
             extracted_code = match.group(1)
             res = execute_code(extracted_code)
+            print("執行程式: test.py")
             print(f"程式的執行結果是: {res}")
             msg_his.append({'role':next_role, 'msg':f"程式的執行結果是: {res}"})
         else:
-            print(f"{next_role} 回答:\n{res}")
+            print(f"{next_role} 發言:\n{res}")
             msg_his.append({'role':next_role, 'msg':res})
 print('--------------------------------------------------------------------------------')
-print('會議結束')
+print('會議結束\n')
+print('--------------------------------------------------------------------------------')
+
+print('對話紀錄:')
+for msg in msg_his:
+    print(msg)
