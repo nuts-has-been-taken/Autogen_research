@@ -104,4 +104,4 @@ critic.register_reply(
     config={"callback": None},
 )
 
-user_proxy.initiate_chat(manager, message="今天的天氣如何")
+user_proxy.initiate_chat(manager, message="黑森林法則在哪一年提出的? 這個數字乘上2015年的台灣星巴克店家數量後的前3個數字是多少?")
